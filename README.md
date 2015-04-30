@@ -7,8 +7,8 @@ The requirements are PostgreSQL and memcached, you can use either dockersized ve
 
 ## Quickstart. Run dockerized reviewboard with all dockerized dependencies, and persistent data in a docker container.
 
-    # Install postgres
-    docker run -d --name rb-postgres -e POSTGRES_USER=reviewboard postgres
+    # Install mysql
+    docker run -d --name rb-mysql --expose=3306 -e MYSQL_ROOT_PASSWORD=pass@word01 -e MYSQL_USER=reviewboard -e MYSQL_PASSWORD=reviewboard -e MYSQL_DATABASE=reviewboard centurylink/mysql
 
     # Install memcached
     docker run --name rb-memcached -d -p 11211 sylvainlasnier/memcached
@@ -17,7 +17,7 @@ The requirements are PostgreSQL and memcached, you can use either dockersized ve
     docker run -v /.ssh -v /media --name rb-data busybox true
 
     # Run reviewboard
-    docker run -it --link rb-postgres:pg --link rb-memcached:memcached --volumes-from rb-data -p 8000:8000 ikatson/reviewboard
+    docker run -d --name rb --link rb-postgres:pg --link rb-memcached:memcached --volumes-from rb-data -p 8000:8000 ikatson/reviewboard
 
 After that, go the url, e.g. ```http://localhost:8000/```, login as ```admin:admin```, change the admin password, and change the location of your SMTP server so that the reviewboard can send emails. You are all set!
 

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-PGUSER="${PGUSER:-reviewboard}"
-PGPASSWORD="${PGPASSWORD:-reviewboard}"
-PGDB="${PGDB:-reviewboard}"
+MSUSER="${MSUSER:-reviewboard}"
+MSPASSWORD="${MSPASSWORD:-reviewboard}"
+MSDB="${MSDB:-reviewboard}"
 
-# Get these variables either from PGPORT and PGHOST, or from
-# linked "pg" container.
-PGPORT="${PGPORT:-$( echo "${PG_PORT_5432_TCP_PORT:-5432}" )}"
-PGHOST="${PGHOST:-$( echo "${PG_PORT_5432_TCP_ADDR:-127.0.0.1}" )}"
+# Get these variables either from MSPORT and MSHOST, or from
+# linked "ms" container.
+MSPORT="${MSPORT:-$( echo "${MS_PORT_3306_TCP_PORT:-3306}" )}"
+MSHOST="${MSHOST:-$( echo "${MS_PORT_3306_TCP_ADDR:-127.0.0.1}" )}"
 
 # Get these variable either from MEMCACHED env var, or from
 # linked "memcached" container.
@@ -25,11 +25,11 @@ if [[ ! -d /var/www/reviewboard ]]; then
     rb-site install --noinput \
         --domain-name="$DOMAIN" \
         --site-root=/ --static-url=static/ --media-url=media/ \
-        --db-type=postgresql \
-        --db-name="$PGDB" \
-        --db-host="$PGHOST" \
-        --db-user="$PGUSER" \
-        --db-pass="$PGPASSWORD" \
+        --db-type=mysql \
+        --db-name="$MSDB" \
+        --db-host="$MSHOST" \
+        --db-user="$MSUSER" \
+        --db-pass="$MSPASSWORD" \
         --cache-type=memcached --cache-info="$MEMCACHED" \
         --web-server-type=lighttpd --web-server-port=8000 \
         --admin-user=admin --admin-password=admin --admin-email=admin@example.com \
