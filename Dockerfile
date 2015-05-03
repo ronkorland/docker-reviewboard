@@ -4,7 +4,7 @@ MAINTAINER igor.katson@gmail.com
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
-RUN apt-get install -y python-pip python-dev python-mysqldb git subversion mercurial python-svn
+RUN apt-get install -y python-pip python-dev python-mysqldb git subversion mercurial python-svn sendmail
 
 RUN easy_install reviewboard
 
